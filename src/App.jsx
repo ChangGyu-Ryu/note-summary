@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import NoteList from "./components/NoteList";
 import NoteDetail from "./components/NoteDetail";
 
-const router = createBrowserRouter([
+export const routerConfig = [
   {
     path: "/",
     element: <Home />,
@@ -18,7 +18,9 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+const router = createBrowserRouter(routerConfig);
 
 function App() {
   return <RouterProvider router={router} />;
