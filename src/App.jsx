@@ -1,5 +1,13 @@
+import Main from "./components/Main";
+import Sidebar from "./components/Sidebar";
+
 function App() {
-  return <div className="text-red-400">Hello</div>;
+  return (
+    <div className="flex h-screen text-white bg-gray-800">
+      <Sidebar />
+      <Main />
+    </div>
+  );
 }
 
 export default App;
