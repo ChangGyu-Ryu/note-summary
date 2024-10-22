@@ -8,7 +8,7 @@ const notesSlice = createSlice({
       state.push(action.payload);
     },
     deleteNote: (state, action) => {
-      return state.filter((note) => note.id !== action.payload.id);
+      return state.filter((note) => note.id !== action.payload);
     },
     updateNote: (state, action) => {
       const { id, title, content, summary } = action.payload;

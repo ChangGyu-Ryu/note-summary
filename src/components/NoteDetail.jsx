@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteNote, updateNote } from "../store/notesSlice";
+import { fetchOpenAI } from "../api";
+import { format } from "date-fns";
 
 const NoteDetail = () => {
   const navigate = useNavigate();
@@ -29,12 +31,23 @@ const NoteDetail = () => {
     navigate("/");
     dispatch(deleteNote(params.id));
   };
+  const handleSubmit = async () => {
+    const data = await fetchOpenAI(note.content);
+    dispatch(
+      updateNote({
+        ...note,
+        summary: data.choices[0].message.content,
+      })
+    );
+  };
 
   return (
     <div className="bg-gray-900 p-6">
       <div className="flex justify-between items-center mb-4">
         <div>
-          <time className="block text-gray-400 text-sm">2024</time>
+          <time className="block text-gray-400 text-sm">
+            {format(note.time, "yyyy MM dd HH:mm")}
+          </time>
           <input
             type="text"
             className="bg-transparent text-2xl font-bold focus-within:outline-blue-500"
@@ -59,7 +72,10 @@ const NoteDetail = () => {
             onChange={handleChangeContent}
             className="bg-gray-700 w-full h-64 p-2 rounded resize-none focus:(ring-2 ring-blue-500)"
           ></textarea>
-          <button className="mt-4 bg-blue-600 hover:bg-blue-500 py-2 px-4 rounded">
+          <button
+            onClick={handleSubmit}
+            className="mt-4 bg-blue-600 hover:bg-blue-500 py-2 px-4 rounded"
+          >
             요약
           </button>
         </div>
